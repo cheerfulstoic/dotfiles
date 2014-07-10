@@ -28,6 +28,7 @@ Bundle 'vim-scripts/projectroot'
 Bundle 'AndrewRadev/splitjoin.vim'
 "Bundle 'scrooloose/syntastic'
 Bundle 'scrooloose/syntastic'
+Bundle 'lilydjwg/colorizer'
 
 autocmd VimEnter,BufNewFile,BufReadPost * silent! call HardMode()
 
