@@ -29,6 +29,11 @@ Bundle 'AndrewRadev/splitjoin.vim'
 "Bundle 'scrooloose/syntastic'
 Bundle 'scrooloose/syntastic'
 Bundle 'lilydjwg/colorizer'
+Bundle 'neo4j-contrib/cypher-vim-syntax'
+Bundle 'tpope/vim-speeddating'
+Bundle 'vim-sexp'
+Bundle 'skalnik/vim-vroom'
+
 
 autocmd VimEnter,BufNewFile,BufReadPost * silent! call HardMode()
 
