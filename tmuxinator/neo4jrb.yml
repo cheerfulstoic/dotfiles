@@ -1,0 +1,54 @@
+# ~/.tmuxinator/neo4jrb.yml
+
+name: neo4jrb
+root: ~/github/neo4jrb
+
+# Optional tmux socket
+# socket_name: foo
+
+# Runs before everything. Use it to start daemons etc.
+pre:
+  - export USE_LOCAL_CORE=true
+  - docker ps -a --format '{{.Names}}' | grep 'neo4jrb_*' | xargs docker stop
+  - docker ps -a --format '{{.Names}}' | grep 'neo4jrb_*' | xargs docker rm
+  - docker network create --driver=bridge neo4jrb_neo4j_network
+  - docker network create --driver=bridge neo4jrb_neo4j_core_network
+  - docker run -d --env NEO4J_AUTH=none --net=neo4jrb_neo4j_network --name=neo4jrb_neo4j_test_db neo4j:latest
+  - docker run -d --env NEO4J_AUTH=none --net=neo4jrb_neo4j_core_network --name=neo4jrb_neo4j_core_test_db neo4j:latest
+  - docker build ./neo4j -t neo4jrb_neo4j
+  - docker build ./neo4j-core -t neo4jrb_neo4j_core
+
+# Runs in each window and pane before window/pane specific commands. Useful for setting up interpreter versions.
+# pre_window: rbenv shell 2.0.0-p247
+
+# Pass command line options to tmux. Useful for specifying a different tmux.conf.
+# tmux_options: -f ~/.tmux.mac.conf
+
+# Change the command to call tmux.  This can be used by derivatives/wrappers like byobu.
+# tmux_command: byobu
+
+# Specifies (by name or index) which window will be selected on project startup. If not set, the first window is used.
+# startup_window: logs
+
+# Controls whether the tmux session should be attached to automatically. Defaults to true.
+# attach: false
+
+# Runs after everything. Use it to attach to tmux with custom options etc.
+# post: tmux -CC attach -t neo4jrb
+
+windows:
+  - neo4j:
+      layout: main-vertical
+      root: ~/github/neo4jrb/neo4j
+      panes:
+        - "vim ."
+        - "docker run --rm -it --volume $(pwd):/usr/src/app --net=neo4jrb_neo4j_network --name=neo4jrb_neo4j_guard_rspec --env NEO4J_URL=http://neo4jrb_neo4j_test_db:7474 --env NEO4J_BOLT_URL=bolt://neo4jrb_neo4j_test_db:7687 neo4jrb_neo4j bundle exec guard -p -l 1 -P rspec"
+        - "docker run --rm -it --volume $(pwd):/usr/src/app --name=neo4jrb_neo4j_guard_rubocop neo4jrb_neo4j bundle exec guard -P rubocop"
+  - neo4j_core:
+      layout: main-vertical
+      root: ~/github/neo4jrb/neo4j-core
+      panes:
+        - "vim ."
+        - "docker run --rm -it --volume $(pwd):/usr/src/app --net=neo4jrb_neo4j_core_network --name=neo4jrb_neo4j_core_guard_rspec --env NEO4J_URL=http://neo4jrb_neo4j_core_test_db:7474 --env NEO4J_BOLT_URL=bolt://neo4jrb_neo4j_core_test_db:7687 neo4jrb_neo4j_core bundle exec guard -p -l 1 -P rspec"
+        - "docker run --rm -it --volume $(pwd):/usr/src/app --name=neo4jrb_neo4j_core_guard_rubocop neo4jrb_neo4j_core bundle exec guard -P rubocop"
+

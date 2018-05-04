@@ -1,0 +1,7 @@
+[alias]
+	st = status
+	co = checkout
+	ds = diff
+[user]
+	name = Brian Underwood
+	email = brian@brian-underwood.codes
