@@ -5,3 +5,5 @@
 [user]
 	name = Brian Underwood
 	email = brian@brian-underwood.codes
+[credential]
+	helper = osxkeychain
