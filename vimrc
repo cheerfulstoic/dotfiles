@@ -3,17 +3,8 @@ filetype off                   " required!
 set number
 set relativenumber
 
-function! NumberToggle()
-  if(&relativenumber == 1)
-    set norelativenumber
-    set number
-  else
-    set relativenumber
-  endif
-endfunc
-
-" nnoremap <C-n> :call NumberToggle()<cr>
-nnoremap <Leader>n :call NumberToggle()<cr>
+" nnoremap <C-n> :set relativenumber!<cr>
+nnoremap <Leader>n :set relativenumber!<cr>
 
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
@@ -84,7 +75,7 @@ let g:lightline = {
       \   'filename': 'FilenameForLightline'
       \ }
       \ }
- 
+
 " Show full path of filename
 function! FilenameForLightline()
     return expand('%')
