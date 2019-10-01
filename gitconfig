@@ -2,6 +2,9 @@
 	st = status
 	co = checkout
 	ds = diff
+	patch = commit --amend --no-edit
+	last = log -1 HEAD
+	summary = log --oneline -n 10
 [user]
 	name = Brian Underwood
 	email = brian@brian-underwood.codes
