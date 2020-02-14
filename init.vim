@@ -3,73 +3,89 @@ filetype off                   " required!
 set number
 set relativenumber
 
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
+if has('vim_starting')
+  " Required:
+  set runtimepath+=/Users/cheerfulstoic/.config/nvim/bundle/neobundle.vim/
+endif
+call neobundle#begin(expand('/Users/cheerfulstoic/.config/nvim/bundle'))
+
+NeoBundleFetch 'Shougo/neobundle.vim'
+
+" set rtp+=~/.vim/bundle/Vundle.vim
+" call vundle#begin()
 
 syntax on
-
-" let Vundle manage Vundle
-" required!
-Plugin 'gmarik/Vundle.vim'
 
 " My Bundles here:
 "
 " original repos on github
-Plugin 'Lokaltog/vim-easymotion'
-Plugin 'ctrlpvim/ctrlp.vim'
-" Plugin 'wikitopian/hardmode'
-" Plugin 'kchmck/vim-coffee-script'
-" Plugin 'demands/vim-coffee-script'
-" Plugin 'slim-template/vim-slim.git'
-Plugin 'flazz/vim-colorschemes'
-Plugin 'ervandew/supertab'
-Plugin 'nathanaelkane/vim-indent-guides'
-Plugin 'tpope/vim-fugitive'
-Plugin 'tpope/vim-rhubarb'
-Plugin 'tpope/vim-surround'
-Plugin 'tpope/vim-repeat'
-" Plugin 'vim-scripts/projectroot'
-Plugin 'AndrewRadev/splitjoin.vim'
-" Plugin 'scrooloose/syntastic'
-" Plugin 'lilydjwg/colorizer'
-" Plugin 'neo4j-contrib/cypher-vim-syntax'
-" Plugin 'vim-sexp'
-" Plugin 'bling/vim-airline'
-" Plugin 'heartsentwined/vim-emblem'
-" Plugin 'asciidoc/vim-asciidoc'
-" Plugin 'hwartig/vim-seeing-is-believing'
-" Plugin 'powerman/vim-plugin-AnsiEsc'
-" Plugin 'itspriddle/vim-marked'
-Plugin 'vim-ruby/vim-ruby'
-" Plugin 'vim-utils/vim-ruby-fold'
-" Plugin 'Floobits/floobits-vim'
-" Plugin 'janko-m/vim-test'
-" Plugin 'christoomey/vim-tmux-runner'
-" Plugin 'tpope/vim-jdaddy'
-" Plugin 'sheerun/vim-polyglot'
-Plugin 'elixir-lang/vim-elixir'
-Plugin 'justinmk/vim-sneak'
-" Plugin 'ngmy/vim-rubocop'
-" Plugin 'tpope/vim-dadbod'
-" Plugin 'prabirshrestha/async.vim'
-" Plugin 'prabirshrestha/vim-lsp'
-Plugin 'posva/vim-vue'
-Plugin 'vim-scripts/RltvNmbr.vim'
-" Plugin 'slashmili/alchemist.vim'
-Plugin 'fatih/vim-go'
-Plugin 'srcery-colors/srcery-vim'
-Plugin 'itchyny/lightline.vim'
-Plugin 'leafgarland/typescript-vim'
-Plugin 'mcchrish/nnn.vim'
+NeoBundle 'Lokaltog/vim-easymotion'
+NeoBundle 'ctrlpvim/ctrlp.vim'
+" NeoBundle 'wikitopian/hardmode'
+" NeoBundle 'kchmck/vim-coffee-script'
+" NeoBundle 'demands/vim-coffee-script'
+" NeoBundle 'slim-template/vim-slim.git'
+NeoBundle 'flazz/vim-colorschemes'
+" NeoBundle 'ervandew/supertab'
+NeoBundle 'nathanaelkane/vim-indent-guides'
+NeoBundle 'tpope/vim-fugitive'
+NeoBundle 'tpope/vim-rhubarb'
+NeoBundle 'tpope/vim-surround'
+NeoBundle 'tpope/vim-repeat'
+" NeoBundle 'vim-scripts/projectroot'
+NeoBundle 'AndrewRadev/splitjoin.vim'
+NeoBundle 'scrooloose/syntastic'
+" NeoBundle 'lilydjwg/colorizer'
+" NeoBundle 'neo4j-contrib/cypher-vim-syntax'
+" NeoBundle 'vim-sexp'
+" NeoBundle 'bling/vim-airline'
+" NeoBundle 'heartsentwined/vim-emblem'
+" NeoBundle 'asciidoc/vim-asciidoc'
+" NeoBundle 'hwartig/vim-seeing-is-believing'
+" NeoBundle 'powerman/vim-plugin-AnsiEsc'
+" NeoBundle 'itspriddle/vim-marked'
+NeoBundle 'vim-ruby/vim-ruby'
+" NeoBundle 'vim-utils/vim-ruby-fold'
+" NeoBundle 'Floobits/floobits-vim'
+" NeoBundle 'janko-m/vim-test'
+" NeoBundle 'christoomey/vim-tmux-runner'
+" NeoBundle 'tpope/vim-jdaddy'
+" NeoBundle 'sheerun/vim-polyglot'
+NeoBundle 'elixir-lang/vim-elixir'
+NeoBundle 'justinmk/vim-sneak'
+" NeoBundle 'tpope/vim-dadbod'
+" NeoBundle 'prabirshrestha/async.vim'
+" NeoBundle 'prabirshrestha/vim-lsp'
+NeoBundle 'posva/vim-vue'
+NeoBundle 'vim-scripts/RltvNmbr.vim'
+" NeoBundle 'slashmili/alchemist.vim'
+NeoBundle 'fatih/vim-go'
+NeoBundle 'srcery-colors/srcery-vim'
+NeoBundle 'itchyny/lightline.vim'
+NeoBundle 'leafgarland/typescript-vim'
+NeoBundle 'mcchrish/nnn.vim'
+NeoBundle 'tpope/vim-commentary'
+NeoBundle 'neoclide/coc.nvim', {'rev': 'release'}
 
 
+call neobundle#end()
+" call vundle#end()
 
-call vundle#end()
+NeoBundleCheck
+
+filetype plugin indent on
 
 " Replace filename component of Lightline statusline
 let g:lightline = {
+      \ 'active': {
+      \   'left': [ [ 'mode', 'paste' ],
+      \             [ 'gitbranch', 'readonly', 'filename', 'modified', 'cocstatus', 'syntastic' ] ]
+      \ },
       \ 'component_function': {
-      \   'filename': 'FilenameForLightline'
+      \   'cocstatus': 'coc#status',
+      \   'gitbranch': 'fugitive#head',
+      \   'filename': 'FilenameForLightline',
+      \   'syntastic': 'SyntasticStatuslineFlag'
       \ }
       \ }
 
@@ -77,6 +93,37 @@ let g:lightline = {
 function! FilenameForLightline()
     return expand('%')
 endfunction
+
+" START CoC configuration
+" Copied from https://github.com/neoclide/coc.nvim
+set cmdheight=2
+set updatetime=300
+set shortmess+=c
+set signcolumn=yes
+
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+
+" Use <cr> to confirm completion, `<C-g>u` means break undo chain at current position.
+" Coc only does snippet and additional edit on confirm.
+inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+
+
+set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
+" END CoC configuration
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
 
 let g:lightline.enable = { 'tabline': 0 }
 
@@ -111,8 +158,6 @@ set lazyredraw
     exec "set listchars=tab:\uBB\uBB,trail:\uB7,nbsp:~"
     au BufNewFile,BufRead *.go set nolist
     set list
-
-filetype plugin indent on
 
 autocmd VimEnter,BufNewFile,BufReadPost * silent! call HardMode()
 
@@ -231,9 +276,6 @@ set exrc
 set secure
 
 let g:sneak#label = 1
-
-let g:vimrubocop_keymap = 0
-nmap <Leader>r :RuboCop<CR>
 
 " To allow changes to be seen via Docker volume mappings
 set backupcopy=yes

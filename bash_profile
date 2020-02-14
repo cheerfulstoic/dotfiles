@@ -92,3 +92,5 @@ else
 fi
 unset __conda_setup
 # <<< conda init <<<
+
+alias ag='ag --path-to-ignore ~/.ignore'
