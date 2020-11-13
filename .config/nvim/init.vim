@@ -47,8 +47,8 @@ NeoBundle 'scrooloose/syntastic'
 NeoBundle 'vim-ruby/vim-ruby'
 " NeoBundle 'vim-utils/vim-ruby-fold'
 " NeoBundle 'Floobits/floobits-vim'
-" NeoBundle 'janko-m/vim-test'
-" NeoBundle 'christoomey/vim-tmux-runner'
+NeoBundle 'janko-m/vim-test'
+NeoBundle 'christoomey/vim-tmux-runner'
 " NeoBundle 'tpope/vim-jdaddy'
 " NeoBundle 'sheerun/vim-polyglot'
 NeoBundle 'elixir-lang/vim-elixir'
@@ -65,6 +65,8 @@ NeoBundle 'itchyny/lightline.vim'
 NeoBundle 'leafgarland/typescript-vim'
 NeoBundle 'mcchrish/nnn.vim'
 NeoBundle 'tpope/vim-commentary'
+NeoBundle 'vimwiki/vimwiki'
+
 NeoBundle 'neoclide/coc.nvim', {'rev': 'release'}
 
 
@@ -222,33 +224,9 @@ nnoremap <Leader>tn :TestNearest -fd<CR>
 " Last
 nnoremap <Leader>tl :TestLast<CR>
 
-if has("gui_macvim")
-  set transparency=2
-
-  " Press Ctrl-Tab to switch between open tabs (like browser tabs) to
-  " the right side. Ctrl-Shift-Tab goes the other way.
-  noremap <C-Tab> :tabnext<CR>
-  noremap <C-S-Tab> :tabprev<CR>
-
-  " Switch to specific tab numbers with Command-number
-  noremap <D-1> :tabn 1<CR>
-  noremap <D-2> :tabn 2<CR>
-  noremap <D-3> :tabn 3<CR>
-  noremap <D-4> :tabn 4<CR>
-  noremap <D-5> :tabn 5<CR>
-  noremap <D-6> :tabn 6<CR>
-  noremap <D-7> :tabn 7<CR>
-  noremap <D-8> :tabn 8<CR>
-  noremap <D-9> :tabn 9<CR>
-  " Command-0 goes to the last tab
-  noremap <D-0> :tablast<CR>
-
-  let test#strategy = "iterm"
-else
-  let test#strategy = "vtr"
-  set mouse=a
-  vmap <C-c> "+y
-endif
+let test#strategy = "vtr"
+set mouse=a
+vmap <C-c> "+y
 
 
 nnoremap <S-Up> :resize -5<CR>
@@ -430,9 +408,15 @@ let g:nnn#command = 'nnn -dH'
 command! Exp NnnPicker '%:p:h'
 command! Explore NnnPicker '%:p:h'
 
+command! HideFloatingWindows call coc#util#float_hide()
+
 nnoremap <Leader>n :set relativenumber!<cr>
 nnoremap <Leader>p :set paste!<cr>
+
+let g:vimwiki_list = [{'path': '~/vimwiki/',
+                      \ 'syntax': 'markdown', 'ext': '.md'}]
 
 " Keep at end of this file
 set exrc
 set secure
+
