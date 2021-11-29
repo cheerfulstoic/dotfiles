@@ -1,6 +1,7 @@
 [ -f /usr/local/etc/profile.d/autojump.sh ] && . /usr/local/etc/profile.d/autojump.sh
 
-export EDITOR=vim
+export EDITOR=nvim
+export TERM=xterm-256color
 
 source ~/git-completion.bash
 
@@ -53,12 +54,14 @@ function parse_git_dirty {
 
 export PS1="[\t] \w\n\[\e[36m\]\`parse_git_branch\`\[\e[0m\] > "
 
-
-[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
+mktouch() { mkdir -p "$(dirname $1)" && touch "$1"; }
 
 # export PATH=$PATH:$(go env GOPATH)/bin
 
 alias alias_candidates='history | tail -n 20000 | sed "s/.*  //"  | sort | uniq -c | sort -g | tail -n 100'
+
+alias j=z
+alias ls=exa
 
 export AWS_PROFILE=fishbrain
 export AWS_REGION=eu-west-1
@@ -73,6 +76,7 @@ source ~/.bin/tmuxinator.bash
 
 alias json=fx
 
+eval $(/opt/homebrew/bin/brew shellenv)
 
 . $(brew --prefix asdf)/asdf.sh
 
@@ -83,8 +87,19 @@ export PATH="/Users/cheerfulstoic/github/bigH/git-fuzzy/bin:$PATH"
 
 eval "$(direnv hook bash)"
 
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash
+
 # The next line updates PATH for the Google Cloud SDK.
 if [ -f '/Users/cheerfulstoic/Downloads/google-cloud-sdk/path.bash.inc' ]; then . '/Users/cheerfulstoic/Downloads/google-cloud-sdk/path.bash.inc'; fi
 
 # The next line enables shell command completion for gcloud.
 if [ -f '/Users/cheerfulstoic/Downloads/google-cloud-sdk/completion.bash.inc' ]; then . '/Users/cheerfulstoic/Downloads/google-cloud-sdk/completion.bash.inc'; fi
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && . "/opt/homebrew/opt/nvm/nvm.sh"  # This loads nvm
+[ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && . "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
+
+. /opt/homebrew/etc/profile.d/z.sh
+source <(kubectl completion bash)
+
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*

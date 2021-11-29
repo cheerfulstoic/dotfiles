@@ -51,9 +51,7 @@ export PS1="\t\n\w \e[36m\`parse_git_branch\` \e[0m > "
 export AWS_PROFILE=fishbrain
 export AWS_REGION=eu-west-1
 
-
 # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
-# export PATH="$PATH:$HOME/.rvm/bin"
 
   [ -f /usr/local/etc/profile.d/autojump.sh ] && . /usr/local/etc/profile.d/autojump.sh
 
@@ -64,3 +62,10 @@ eval "$(direnv hook bash)"
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 
 export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
+export PATH="$PATH:$HOME/.rvm/bin"

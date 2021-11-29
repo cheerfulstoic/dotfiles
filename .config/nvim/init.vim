@@ -3,77 +3,91 @@ filetype off                   " required!
 set number
 set relativenumber
 
-if has('vim_starting')
-  " Required:
-  set runtimepath+=/Users/cheerfulstoic/.config/nvim/bundle/neobundle.vim/
+
+" vvv  dein.vim  vvv
+
+if &compatible
+  set nocompatible
 endif
-call neobundle#begin(expand('/Users/cheerfulstoic/.config/nvim/bundle'))
+" Add the dein installation directory into runtimepath
+set runtimepath+=~/.cache/dein/repos/github.com/Shougo/dein.vim
 
-NeoBundleFetch 'Shougo/neobundle.vim'
+if dein#load_state('~/.cache/dein')
+  call dein#begin('~/.cache/dein')
 
-" set rtp+=~/.vim/bundle/Vundle.vim
-" call vundle#begin()
+  call dein#add('~/.cache/dein/repos/github.com/Shougo/dein.vim')
+
+  " My Bundles here:
+  "
+  " original repos on github
+  call dein#add('Lokaltog/vim-easymotion')
+  call dein#add('ctrlpvim/ctrlp.vim')
+  " call dein#add('wikitopian/hardmode')
+  " call dein#add('kchmck/vim-coffee-script')
+  " call dein#add('demands/vim-coffee-script')
+  " call dein#add('slim-template/vim-slim.git')
+  call dein#add('flazz/vim-colorschemes')
+  " call dein#add('ervandew/supertab')
+  call dein#add('nathanaelkane/vim-indent-guides')
+  call dein#add('tpope/vim-fugitive')
+  call dein#add('tpope/vim-rhubarb')
+  call dein#add('tpope/vim-surround')
+  call dein#add('tpope/vim-repeat')
+  " call dein#add('vim-scripts/projectroot')
+  call dein#add('AndrewRadev/splitjoin.vim')
+  call dein#add('scrooloose/syntastic')
+  " call dein#add('lilydjwg/colorizer')
+  " call dein#add('neo4j-contrib/cypher-vim-syntax')
+  " call dein#add('vim-sexp')
+  " call dein#add('bling/vim-airline')
+  " call dein#add('heartsentwined/vim-emblem')
+  " call dein#add('asciidoc/vim-asciidoc')
+  " call dein#add('hwartig/vim-seeing-is-believing')
+  " call dein#add('powerman/vim-plugin-AnsiEsc')
+  " call dein#add('itspriddle/vim-marked')
+  call dein#add('vim-ruby/vim-ruby')
+  " call dein#add('vim-utils/vim-ruby-fold')
+  " call dein#add('Floobits/floobits-vim')
+  call dein#add('janko-m/vim-test')
+  call dein#add('christoomey/vim-tmux-runner')
+  " call dein#add('tpope/vim-jdaddy')
+  " call dein#add('sheerun/vim-polyglot')
+  call dein#add('elixir-lang/vim-elixir')
+  call dein#add('justinmk/vim-sneak')
+  " call dein#add('tpope/vim-dadbod')
+  " call dein#add('prabirshrestha/async.vim')
+  " call dein#add('prabirshrestha/vim-lsp')
+  call dein#add('posva/vim-vue')
+  call dein#add('vim-scripts/RltvNmbr.vim')
+  " call dein#add('slashmili/alchemist.vim')
+  call dein#add('fatih/vim-go')
+  call dein#add('srcery-colors/srcery-vim')
+  call dein#add('itchyny/lightline.vim')
+  call dein#add('leafgarland/typescript-vim')
+  call dein#add('mcchrish/nnn.vim')
+  call dein#add('tpope/vim-commentary')
+  call dein#add('vimwiki/vimwiki')
+  " call dein#add('dracula/vim')
+  call dein#add('wellle/context.vim')
+
+  call dein#add('neoclide/coc.nvim', { 'merged': 0 })
+
+  if !has('nvim')
+    " For later?
+  endif
+
+  call dein#end()
+  call dein#save_state()
+endif
+
+filetype plugin indent on
+syntax enable
+
+" ^^^  dein.vim  ^^^
 
 syntax on
 
-" My Bundles here:
-"
-" original repos on github
-NeoBundle 'Lokaltog/vim-easymotion'
-NeoBundle 'ctrlpvim/ctrlp.vim'
-" NeoBundle 'wikitopian/hardmode'
-" NeoBundle 'kchmck/vim-coffee-script'
-" NeoBundle 'demands/vim-coffee-script'
-" NeoBundle 'slim-template/vim-slim.git'
-NeoBundle 'flazz/vim-colorschemes'
-" NeoBundle 'ervandew/supertab'
-NeoBundle 'nathanaelkane/vim-indent-guides'
-NeoBundle 'tpope/vim-fugitive'
-NeoBundle 'tpope/vim-rhubarb'
-NeoBundle 'tpope/vim-surround'
-NeoBundle 'tpope/vim-repeat'
-" NeoBundle 'vim-scripts/projectroot'
-NeoBundle 'AndrewRadev/splitjoin.vim'
-NeoBundle 'scrooloose/syntastic'
-" NeoBundle 'lilydjwg/colorizer'
-" NeoBundle 'neo4j-contrib/cypher-vim-syntax'
-" NeoBundle 'vim-sexp'
-" NeoBundle 'bling/vim-airline'
-" NeoBundle 'heartsentwined/vim-emblem'
-" NeoBundle 'asciidoc/vim-asciidoc'
-" NeoBundle 'hwartig/vim-seeing-is-believing'
-" NeoBundle 'powerman/vim-plugin-AnsiEsc'
-" NeoBundle 'itspriddle/vim-marked'
-NeoBundle 'vim-ruby/vim-ruby'
-" NeoBundle 'vim-utils/vim-ruby-fold'
-" NeoBundle 'Floobits/floobits-vim'
-NeoBundle 'janko-m/vim-test'
-NeoBundle 'christoomey/vim-tmux-runner'
-" NeoBundle 'tpope/vim-jdaddy'
-" NeoBundle 'sheerun/vim-polyglot'
-NeoBundle 'elixir-lang/vim-elixir'
-NeoBundle 'justinmk/vim-sneak'
-" NeoBundle 'tpope/vim-dadbod'
-" NeoBundle 'prabirshrestha/async.vim'
-" NeoBundle 'prabirshrestha/vim-lsp'
-NeoBundle 'posva/vim-vue'
-NeoBundle 'vim-scripts/RltvNmbr.vim'
-" NeoBundle 'slashmili/alchemist.vim'
-NeoBundle 'fatih/vim-go'
-NeoBundle 'srcery-colors/srcery-vim'
-NeoBundle 'itchyny/lightline.vim'
-NeoBundle 'leafgarland/typescript-vim'
-NeoBundle 'mcchrish/nnn.vim'
-NeoBundle 'tpope/vim-commentary'
-NeoBundle 'vimwiki/vimwiki'
-
-NeoBundle 'neoclide/coc.nvim', {'rev': 'release'}
-
-
-call neobundle#end()
-" call vundle#end()
-
-NeoBundleCheck
+let g:context_filetype_blacklist = ['netrw']
 
 filetype plugin indent on
 
@@ -164,7 +178,8 @@ set lazyredraw
 autocmd VimEnter,BufNewFile,BufReadPost * silent! call HardMode()
 
 " colorscheme abra
-colorscheme srcery
+" colorscheme srcery
+" color dracula
 
 
 filetype plugin indent on     " required!
