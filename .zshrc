@@ -2,7 +2,7 @@
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-export ZSH="/Users/cheerfulstoic/.oh-my-zsh"
+export ZSH="/Users/brian/.oh-my-zsh"
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
@@ -102,17 +102,58 @@ source $ZSH/oh-my-zsh.sh
 
 mktouch() { mkdir -p "$(dirname $1)" && touch "$1"; }
 
-export NVM_DIR="$HOME/.nvm"
-[ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && . "/opt/homebrew/opt/nvm/nvm.sh"  # This loads nvm
-[ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && . "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
-
+export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
 
 [ -f /opt/homebrew/etc/profile.d/autojump.sh ] && . /opt/homebrew/etc/profile.d/autojump.sh
-
-. /opt/homebrew/opt/asdf/libexec/asdf.sh
 
 
 # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
 export PATH="$PATH:$HOME/.rvm/bin"
 
+export PATH="$PATH:$HOME/bin"
+
 eval "$(direnv hook zsh)"
+
+function zshaddhistory() {
+  echo "${1%%$'\n'}⋮${PWD}   " >> ~/.zsh_history_ext
+}
+
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$('/Users/brian/opt/anaconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "/Users/brian/opt/anaconda3/etc/profile.d/conda.sh" ]; then
+        . "/Users/brian/opt/anaconda3/etc/profile.d/conda.sh"
+    else
+        export PATH="/Users/brian/opt/anaconda3/bin:$PATH"
+    fi
+fi
+unset __conda_setup
+# <<< conda initialize <<<
+
+unsetopt inc_append_history
+unsetopt share_history
+
+# ulimit -n 524288
+ulimit -n 1000000
+
+alias aoeu=asdf
+
+. /opt/homebrew/opt/asdf/libexec/asdf.sh
+
+
+eval "$(atuin init zsh --disable-up-arrow)"
+
+export ERL_AFLAGS="-kernel shell_history enabled -kernel shell_history_file_bytes 1024000"
+
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/Users/brian/Downloads/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/brian/Downloads/google-cloud-sdk/path.zsh.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/Users/brian/Downloads/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/brian/Downloads/google-cloud-sdk/completion.zsh.inc'; fi

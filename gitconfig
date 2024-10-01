@@ -1,21 +1,39 @@
 [alias]
-	st = status
-	co = checkout
-	ds = diff
-	patch = commit --amend --no-edit
-	last = log -1 HEAD
-	summary = log --oneline -n 10
-	pushup = "!git push --set-upstream origin $(git symbolic-ref --short HEAD)"
-	touch = commit --allow-empty --amend --no-edit
-	graph = "log --graph --abbrev-commit --decorate --all --format=format:\"%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(dim white) - %an%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n %C(white)%s%C(reset)\""
+  st = status
+  co = checkout
+  ds = diff
+  patch = commit --amend --no-edit
+  last = log -1 HEAD
+  summary = log --oneline -n 10
+  pushup = "!git push --set-upstream origin $(git symbolic-ref --short HEAD)"
+  touch = commit --allow-empty --amend --no-edit
+  graph = "log --graph --abbrev-commit --decorate --all --format=format:\"%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(dim white) - %an%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n %C(white)%s%C(reset)\""
+  contribute = town contribute
+  diff-parent = town diff-parent
+  hack = town hack
+  propose = town propose
+  sync = town sync
 [user]
-	name = Brian Underwood
-	email = public@brian-underwood.codes
+  name = Brian Underwood
+  email = public@brian-underwood.codes
 [credential]
-	helper = osxkeychain
+  helper = osxkeychain
 [core]
-	excludesfile = /Users/cheerfulstoic/.gitignore_global
-	editor = vim
+  excludesfile = /Users/brian/.gitignore
+  editor = vim
+  pager = delta
+[interactive]
+  diffFilter = delta --color-only
+[delta]
+  navigate = true    # use n and N to move between diff sections
+
+  # delta detects terminal colors automatically; set one of these to disable auto-detection
+  # dark = true
+  # light = true
+[merge]
+	conflictStyle = zdiff3
+[diff]
+    colorMoved = default
 [difftool "sourcetree"]
 	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
 	path = 
@@ -23,9 +41,13 @@
 	cmd = /Applications/Sourcetree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
 	trustExitCode = true
 [filter "lfs"]
-	required = true
-	clean = git-lfs clean -- %f
-	smudge = git-lfs smudge -- %f
-	process = git-lfs filter-process
+  required = true
+  clean = git-lfs clean -- %f
+  smudge = git-lfs smudge -- %f
+  process = git-lfs filter-process
 [pull]
-	rebase = false
+  rebase = false
+[push]
+  autoSetupRemote = true
+[init]
+  defaultBranch = main
